@@ -1,30 +1,18 @@
-<?php
-if(isset($_POST['email'])) {
-    $email_to = "degravek@gmail.com";
-    $email_subject = "Email subject";
-    $first_name = $_POST['name']; // required
-    $email_from = $_POST['email']; // required
-    $email_message = $_POST['message']; // not required
+<?php 
+if(isset($_POST['submit'])){
+    $to = "degravek@gmail.com"; // this is your Email address
+    $from = $_POST['email']; // this is the sender's Email address
+    $first_name = $_POST['name'];
+    $subject = "Form submission";
+    $subject2 = "Copy of your form submission";
+    $message = $first_name . " wrote the following:" . "\n\n" . $_POST['message'];
+    $message2 = "Here is a copy of your message " . $first_name . "\n\n" . $_POST['message'];
 
-    function clean_string($string) {
-    $bad = array("content-type","bcc:","to:","cc:","href");
-    return str_replace($bad,"",$string);
+    $headers = "From:" . $from;
+    $headers2 = "From:" . $to;
+    mail($to,$subject,$message,$headers);
+    mail($from,$subject2,$message2,$headers2); // sends a copy of the message to the sender
+    echo "Mail Sent. Thank you " . $first_name . ", we will contact you shortly.";
+    // You can also use header('Location: thank_you.php'); to redirect to another page.
     }
-
-    $email_message = "Form details below.\n\n";
-    $email_message .= "Name: ".clean_string($first_name)."\n";
-    $email_message .= "Email: ".clean_string($email_from)."\n";
-    $email_message .= "Telephone: ".clean_string($email_message)."\n";
-
-// create email headers
-$headers = 'From: '.$email_from."\r\n".
-'Reply-To: '.$email_from."\r\n" .
-'X-Mailer: PHP/' . phpversion();
-mail($email_to, $email_subject, $email_message);
-?>
-  <!-- include your own success html here -->
-
-  <div class="feedback">Thank you for contacting us. We will be in touch with you very soon.</div>
-  <?php
-}
 ?>
