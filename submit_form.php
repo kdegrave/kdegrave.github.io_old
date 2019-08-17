@@ -4,7 +4,7 @@ if(isset($_POST['email'])) {
     $email_subject = "Email subject";
     $first_name = $_POST['name']; // required
     $email_from = $_POST['email']; // required
-    $telephone = $_POST['message']; // not required
+    $email_message = $_POST['message']; // not required
 
     function clean_string($string) {
     $bad = array("content-type","bcc:","to:","cc:","href");
@@ -12,9 +12,9 @@ if(isset($_POST['email'])) {
     }
 
     $email_message = "Form details below.\n\n";
-    $email_message .= "Name: ".clean_string($name)."\n";
+    $email_message .= "Name: ".clean_string($first_name)."\n";
     $email_message .= "Email: ".clean_string($email_from)."\n";
-    $email_message .= "Message: ".clean_string($message)."\n";
+    $email_message .= "Message: ".clean_string($email_message)."\n";
 
 // create email headers
 $headers = 'From: '.$email_from."\r\n".
